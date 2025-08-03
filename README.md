@@ -1,48 +1,36 @@
 # FastAPI Supabase TODO Application
 
-## Configuration Supabase
+Une API REST pour gérer des listes de tâches (TODO) construite avec FastAPI et Supabase.
 
-### 1. Création du projet Supabase
+## Installation et Configuration
 
-1. Allez sur [supabase.com](https://supabase.com) et créez un compte
-2. Créez un nouveau projet
-3. Notez les informations suivantes :
-   - **Project URL** : `https://your_project_ref.supabase.co`
-   - **Anon key** : Clé publique pour l'authentification côté client
-   - **Service role key** : Clé privée pour les opérations administrateur
-   - **Database URL** : `postgresql://postgres:[YOUR-PASSWORD]@db.your_project_ref.supabase.co:5432/postgres`
-
-### 2. Configuration des variables d'environnement
-
-Copiez le fichier `.env.example` vers `.env` et remplacez les valeurs :
+### 1. Cloner le projet
 
 ```bash
-cp .env.example .env
+git clone <votre-repo>
+cd Test-supabase
 ```
 
-Éditez `.env` avec vos vraies clés Supabase :
+### 2. Créer un environnement virtuel
 
-```env
-# Configuration Supabase
-SUPABASE_DB_URL=postgresql://postgres:your_real_password@db.your_project_ref.supabase.co:5432/postgres
-SUPABASE_URL=https://your_project_ref.supabase.co
-SUPABASE_ANON_KEY=your_real_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_real_service_role_key
-
-# JWT Configuration
-SECRET_KEY=your_secret_key_here
-ALGORITHM=HS256
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# ou
+.venv\Scripts\activate     # Windows
 ```
 
-### 3. Installation des dépendances
+### 3. Installer les dépendances
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Création des tables
+### 4. Configuration
 
-Les tables seront créées automatiquement au démarrage de l'application grâce à SQLModel.
+1. Copiez le fichier `.env.example` vers `.env`
+2. Configurez vos clés Supabase dans le fichier `.env`
+3. L'application basculera automatiquement vers SQLite si Supabase n'est pas accessible
 
 ### 5. Démarrage de l'application
 
@@ -50,13 +38,17 @@ Les tables seront créées automatiquement au démarrage de l'application grâce
 uvicorn app.main:app --reload
 ```
 
+L'application sera disponible sur : http://localhost:8000
+
+Documentation interactive : http://localhost:8000/docs
+
 ## Endpoints disponibles
 
 ### Authentification
 - `POST /api/v1/users` - Créer un utilisateur
-- `POST /api/v1/auth/token` - Se connecter et obtenir un token
-- `POST /api/v1/auth/forgot-password` - Demander une réinitialisation de mot de passe
-- `POST /api/v1/auth/reset-password` - Réinitialiser le mot de passe
+- `POST /api/v1/token` - Se connecter et obtenir un token
+- `POST /api/v1/forgot-password` - Demander une réinitialisation de mot de passe
+- `POST /api/v1/reset-password` - Réinitialiser le mot de passe
 
 ### Todos
 - `POST /api/v1/todolists` - Créer une todo
@@ -64,6 +56,25 @@ uvicorn app.main:app --reload
 - `GET /api/v1/todolists/{user_id}` - Obtenir les todos d'un utilisateur
 - `PUT /api/v1/todolists/{todo_id}` - Mettre à jour une todo
 - `DELETE /api/v1/todolists/{todo_id}` - Supprimer une todo
+
+## Fonctionnalités
+
+- ✅ Authentification JWT
+- ✅ Gestion des utilisateurs
+- ✅ CRUD complet pour les todos
+- ✅ Validation des données avec Pydantic
+- ✅ Base de données Supabase avec fallback SQLite
+- ✅ Documentation automatique avec FastAPI
+- ✅ Gestion des erreurs
+
+## Technologies utilisées
+
+- **FastAPI** - Framework web moderne et rapide
+- **SQLModel** - ORM moderne basé sur Pydantic et SQLAlchemy
+- **Supabase** - Backend-as-a-Service avec PostgreSQL
+- **JWT** - Authentification par tokens
+- **Pydantic** - Validation et sérialisation des données
+- **Uvicorn** - Serveur ASGI haute performance
 
 ## Structure du projet
 
